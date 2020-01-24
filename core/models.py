@@ -15,8 +15,9 @@ class Producto(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=256, null=False)
     categoria = models.ForeignKey(Categoria, on_delete = models.CASCADE)
-    paquetes = models.IntegerField(default=0)
-    unidadPaquete = models.IntegerField(null=False)
+    paquetes = models.IntegerField(null=True)
+    unidadPaquete = models.IntegerField(null=True)
+    sueltas = models.IntegerField(default=0)
     existencias = models.IntegerField(default=0)
     
 class Entrada(models.Model):

@@ -21,14 +21,27 @@ class CategoriaModelChoiceField(forms.ModelChoiceField):
 
 class NuevoProductoForm(forms.ModelForm):
     categoria =  CategoriaModelChoiceField(queryset = Categoria.objects.filter().order_by('id'), required = True, widget = forms.Select(attrs={'class':'form-control'}))
+    unidadPaquete = forms.IntegerField(required = True, widget = forms.NumberInput(attrs={'class':'form-control'}), label="Unidades por paquete")
     
     class Meta: 
         model = Producto
         fields = ['nombre','categoria', 'unidadPaquete']
         widgets = {
             'nombre': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Nombre: '}),
-            'unidadPaquete': forms.NumberInput(attrs={'class':'form-control', 'placeholder':'Precio unitario: '}),
         }
         labels = {
              'nombre':'Nombre', 'unidadPaquete':'Unidades por paquete', 'categoria':'Categoria'
+        }
+        
+class NuevoProductoForm2(forms.ModelForm):
+    categoria =  CategoriaModelChoiceField(queryset = Categoria.objects.filter().order_by('id'), required = True, widget = forms.Select(attrs={'class':'form-control'}))
+    
+    class Meta: 
+        model = Producto
+        fields = ['nombre','categoria']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Nombre: '}),
+        }
+        labels = {
+             'nombre':'Nombre', 'categoria':'Categoria'
         }

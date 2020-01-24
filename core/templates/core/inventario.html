@@ -18,26 +18,19 @@
 							{% for categoria in categorias|dictsort:'nombre'  %}
 								
 									{% if categoria.id == filtro %}
-										<a href = "{% url 'core:indice' categoria.id|slugify%}" class="dropdown-item" style="background:#FECDCD; color:black"><b>{{categoria.nombre}}</b>	</a>
+										<a href = "{% url 'core:inventario' categoria.id|slugify%}" class="dropdown-item" style="background:#FECDCD; color:black"><b>{{categoria.nombre}}</b>	</a>
 									{% else %}
-										<a href = "{% url 'core:indice' categoria.id|slugify%}" class="dropdown-item">{{categoria.nombre}}</a>
+										<a href = "{% url 'core:inventario' categoria.id|slugify%}" class="dropdown-item">{{categoria.nombre}}</a>
 									{% endif %}
 							
 							{% endfor %}
 
 									{% if filtro == 0 %}
-										<a href = "{% url 'core:indice' 0|slugify%}" class="dropdown-item" style="background:#FECDCD; color:black"><b>Todos</b></a>
+										<a href = "{% url 'core:inventario' 0|slugify%}" class="dropdown-item" style="background:#FECDCD; color:black"><b>Todos</b></a>
 									{% else %}
-										<a href = "{% url 'core:indice' 0|slugify%}" class="dropdown-item">Todos</a>
+										<a href = "{% url 'core:inventario' 0|slugify%}" class="dropdown-item">Todos</a>
 									{% endif %} 
 					</div>
-				</div>
-			</div>
-			<div class="col-md-8">
-				<div class="btn-group" role="group">
-					<a class="btn btn-danger" href="{% url 'core:nuevacategoria' %}" role="button">Agregar categoria</a>
-					<a class="btn btn-danger" href="{% url 'core:nuevoproducto' %}" role="button">Agregar producto por paquete</a>
-					<a class="btn btn-danger" href="{% url 'core:nuevoproducto2' %}" role="button">Agregar producto por unidad</a>
 				</div>
 			</div>
 		</div>
@@ -47,8 +40,8 @@
 			<div class="card white-content">
 				<div class="card-body">
 					<div class="table-responsive">
-						<table class="table tablesorter " id="">
-							<thead class=" text-primary">
+						<table class="table table-resorted" id="">
+							<thead class=" text-primary" align = center>
 								<script langiage="javascript" type="text/javascript">
 									// RESALTAR LAS FILAS AL PASAR EL MOUSE
 									function ResaltarFila(id_fila) {
@@ -63,17 +56,25 @@
 									location.href=url;
 									}
 								</script>
-								<th>
-									
+
+								<th width = "5%">
+									<h5>ID</h5>
 								</th>
-								<th>
-									<h4>ID</h4>
+								<th width = "30%">
+									<h5>Nombre</h5>
 								</th>
-								<th>
-									<h4>Nombre</h4>
+								<th width = "10%">
+									<h5>Paquetes</h5>
 								</th>
-								<th>
-									<h4>Categoria</h4>
+								<th width = "10%">
+									<h5>U / paquete</h5>
+								</th>
+
+								<th width = "10%">
+									<h5>U. sueltas</h5>
+								</th>
+								<th width = "10%">
+									<h5>Cantidad total</h5>
 								</th>
 
 
@@ -82,24 +83,32 @@
 							<tbody>
 								{% for p in productos|dictsort:'categoria.id' %}
 									<tr id={{p.id}} onMouseOver="ResaltarFila({{p.id}});" onMouseOut="RestablecerFila({{p.id}}, '')" onClick="CrearEnlace('home');">
-										<td>
-									
+
+										<td align = center>
+											<p><b><font size="3">{{p.id}}</font></b></p>
 										</td>
 										<td >
-											<p><b><font size="4">{{p.id}}</font></b></p>
+											<p><b><font size="3">{{p.nombre}}</font></b></p>
 										</td>
-										<td >
-											<p><b><font size="4">{{p.nombre}}</font></b></p>
+										<td align = center>
+											<p><b><font size="3">&nbsp;{{p.paquetes}}</font></b></p>
 										</td>
-										<td >
-											<p><b><font size="4">{{p.categoria.nombre}}</font></b></p>
+											
+										<td align = center>
+											<p><b><font size="3">&nbsp;{{p.unidadPaquete}}</font></b></p>
+										</td>
+										<td align = center>
+											<p><b><font size="3">&nbsp;{{p.sueltas}}</font></b></p>
+										</td>
+										<td align = center>
+											<p><b><font size="3">&nbsp;{{p.existencias}}</font></b></p>
 										</td>
 
 									</tr>
 								{% endfor %}
 							</tbody>
 						</table>
-				      </div>
+				    </div>
 				</div>
 			</div>
 	    </div>

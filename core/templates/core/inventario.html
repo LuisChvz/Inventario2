@@ -7,37 +7,43 @@
 
 
 <div class="content">
-		<div class="row">
-			<div class="col-md-4">
-				<div class="btn-group" role="group">
-					<button id="btnGroupDrop1" type="button" class="btn btn-danger btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Filtrar por categoría
-					</button>
-					<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-
-							{% for categoria in categorias|dictsort:'nombre'  %}
-								
-									{% if categoria.id == filtro %}
-										<a href = "{% url 'core:inventario' categoria.id|slugify%}" class="dropdown-item" style="background:#FECDCD; color:black"><b>{{categoria.nombre}}</b>	</a>
-									{% else %}
-										<a href = "{% url 'core:inventario' categoria.id|slugify%}" class="dropdown-item">{{categoria.nombre}}</a>
-									{% endif %}
-							
-							{% endfor %}
-
-									{% if filtro == 0 %}
-										<a href = "{% url 'core:inventario' 0|slugify%}" class="dropdown-item" style="background:#FECDCD; color:black"><b>Todos</b></a>
-									{% else %}
-										<a href = "{% url 'core:inventario' 0|slugify%}" class="dropdown-item">Todos</a>
-									{% endif %} 
-					</div>
-				</div>
-			</div>
-		</div>
-								
+		
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card white-content">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-md-10">
+							<h2>Inventario general</h2>
+						</div>
+						<div class="col-md-2">
+							<div class="btn-group" role="group">
+								<button id="btnGroupDrop1" type="button" class="btn btn-danger btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Filtrar por categoría
+								</button>
+								<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+
+										{% for categoria in categorias|dictsort:'nombre'  %}
+								
+												{% if categoria.id == filtro %}
+													<a href = "{% url 'core:inventario' categoria.id|slugify%}" class="dropdown-item" style="background:#FECDCD; color:black"><b>{{categoria.nombre}}</b>	</a>
+												{% else %}
+													<a href = "{% url 'core:inventario' categoria.id|slugify%}" class="dropdown-item">{{categoria.nombre}}</a>
+												{% endif %}
+										
+										{% endfor %}
+
+												{% if filtro == 0 %}
+													<a href = "{% url 'core:inventario' 0|slugify%}" class="dropdown-item" style="background:#FECDCD; color:black"><b>Todos</b></a>
+												{% else %}
+													<a href = "{% url 'core:inventario' 0|slugify%}" class="dropdown-item">Todos</a>
+												{% endif %} 
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
 				<div class="card-body">
 					<div class="table-responsive">
 						<table class="table table-resorted" id="">
@@ -82,7 +88,7 @@
 							
 							<tbody>
 								{% for p in productos|dictsort:'categoria.id' %}
-									<tr id={{p.id}} onMouseOver="ResaltarFila({{p.id}});" onMouseOut="RestablecerFila({{p.id}}, '')" onClick="CrearEnlace('home');">
+									<tr id={{p.id}} onMouseOver="ResaltarFila({{p.id}});" onMouseOut="RestablecerFila({{p.id}}, '')" onClick="CrearEnlace('#');">
 
 										<td align = center>
 											<p><b><font size="3">{{p.id}}</font></b></p>
@@ -91,11 +97,19 @@
 											<p><b><font size="3">{{p.nombre}}</font></b></p>
 										</td>
 										<td align = center>
-											<p><b><font size="3">&nbsp;{{p.paquetes}}</font></b></p>
+											{% if p.empaquetado %}
+												<p><b><font size="3">&nbsp;{{p.paquetes}}</font></b></p>
+											{% else %}
+												<p><b><font size="3">&nbsp;---</font></b></p>
+											{% endif %}
 										</td>
 											
 										<td align = center>
-											<p><b><font size="3">&nbsp;{{p.unidadPaquete}}</font></b></p>
+											{% if p.empaquetado %}
+												<p><b><font size="3">&nbsp;{{p.unidadPaquete}}</font></b></p>
+											{% else %}
+												<p><b><font size="3">&nbsp;---</font></b></p>
+											{% endif %}
 										</td>
 										<td align = center>
 											<p><b><font size="3">&nbsp;{{p.sueltas}}</font></b></p>

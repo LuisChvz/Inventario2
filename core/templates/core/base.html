@@ -23,8 +23,7 @@
 	  <link href="{% static 'css/black-dashboard.css' %}" rel="stylesheet" type="text/css"/>
 	  <link href="{% static 'demo/demo.css' %}" rel="stylesheet" />
 
-	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css">
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  <link rel="stylesheet" href="{% static 'css/gijgo.min.css' %}">
 
 	</head>
 
@@ -38,25 +37,32 @@
 	          </a>
 	        </div>
 	        <ul class="nav">
-				<li>
-					<a href="{% url 'core:indice' 0|slugify%}">
-						<i class="tim-icons icon-bullet-list-67"></i>
-						<p><font size=3><b>Indice</b></font></p>
-					</a>
-				</li>
-				<li>
-					<a href="{% url 'core:inventario' 0|slugify%}">
-						<i class="tim-icons icon-chart-bar-32"></i>
-						<p><font size=3><b>inventario</b></font></p>
-					</a>
-				</li>
-				<li>
-					<a href="{% url 'core:inventario' 0|slugify%}">
-						<i class="tim-icons icon-chart-bar-32"></i>
-						<p><font size=3><b>inventario</b></font></p>
-					</a>
-				</li>
-				
+				{% if request.user.is_authenticated %}
+					<li>
+						<a href="{% url 'core:indice' 0|slugify%}">
+							<i class="tim-icons icon-bullet-list-67"></i>
+							<p><font size=3><b>Indice</b></font></p>
+						</a>
+					</li>
+					<li>
+						<a href="{% url 'core:inventario' 0|slugify%}">
+							<i class="tim-icons icon-chart-bar-32"></i>
+							<p><font size=3><b>Inventario</b></font></p>
+						</a>
+					</li>
+					<li>
+						<a href="{% url 'core:productos' 0|slugify%}">
+							<i class="tim-icons icon-double-right"></i>
+							<p><font size=3><b>Entrada</b></font></p>
+						</a>
+					</li>
+					<li>
+						<a href="{% url 'core:inventario' 0|slugify%}">
+							<i class="tim-icons icon-double-left"></i>
+							<p><font size=3><b>Salida</b></font></p>
+						</a>
+					</li>
+				{% endif %}
 	        </ul>
 	      </div>
 	    </div>

@@ -1,5 +1,5 @@
 from django import forms
-from core.models import Categoria, Producto, Entrada, Salida
+from core.models import Categoria, Producto, Movimiento
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -25,9 +25,11 @@ class NuevoProductoForm(forms.ModelForm):
     
     class Meta: 
         model = Producto
-        fields = ['nombre','categoria', 'unidadPaquete']
+        fields = ['nombre','categoria', 'unidadPaquete', 'paquetes']
         widgets = {
             'nombre': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Nombre: '}),
+            'paquetes': forms.HiddenInput(),
+            'empaquetado': forms.HiddenInput(),
         }
         labels = {
              'nombre':'Nombre', 'unidadPaquete':'Unidades por paquete', 'categoria':'Categoria'
@@ -44,4 +46,33 @@ class NuevoProductoForm2(forms.ModelForm):
         }
         labels = {
              'nombre':'Nombre', 'categoria':'Categoria'
+        }
+        
+        
+class NuevaEntradaForm(forms.ModelForm):
+    
+    class Meta: 
+        opciones = [(False, "Paquete"), (True, "Unidad")]
+        model = Movimiento
+        fields = ['medida','cantidad', 'producto']
+        widgets = {
+            'medida': forms.Select(choices = opciones, attrs={'class':'form-control'}),
+            'cantidad': forms.NumberInput(attrs={'class':'form-control', 'placeholder':'0'}),
+            'producto':forms.HiddenInput(),
+        }
+        labels = {
+             'medida':'Seleccione la medida', 'cantidad':'Cantidad'
+        }
+        
+class NuevaEntradaForm2(forms.ModelForm):
+    
+    class Meta: 
+        model = Movimiento
+        fields = ['cantidad', 'producto']
+        widgets = {
+            'cantidad': forms.NumberInput(attrs={'class':'form-control', 'placeholder':'0'}),
+            'producto':forms.HiddenInput(),
+        }
+        labels = {
+            'cantidad':'Cantidad'
         }
